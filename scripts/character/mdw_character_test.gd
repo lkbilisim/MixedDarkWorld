@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 func _refresh_hud() -> void:
     if _status == null or _player == null:
         return
-    var info: String = _player.get_status_text()
+    var info: String = str(_player.call("get_status_text"))
     _status.text = "MIXED DARK WORLD 0.3.1 - INSAN KARAKTER TESTI" \
         + "\nWASD / OK: Hareket | SHIFT: Kos | SPACE: Zipla" \
         + "\nFare: Kamera | ESC: Imleci birak | C: Kameraya geri don" \
