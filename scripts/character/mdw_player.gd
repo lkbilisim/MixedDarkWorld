@@ -171,7 +171,7 @@ func load_character(index: int) -> void:
     elif _animation_player == null:
         model_warning = "Hazir animasyon yok; kemiklerle deneysel yuruyus kullaniliyor."
     else:
-        var named_anims: Array[StringName] = _animation_player.get_animation_list()
+        var named_anims: PackedStringArray = _animation_player.get_animation_list()
         if not _has_suitable_animation(named_anims):
             model_warning = "Hazir yuruyus bulunamadi; kemik canlandirmasi deneniyor."
     model_changed.emit(current_model_name, current_model_path)
@@ -209,7 +209,7 @@ func _seek_components(node: Node) -> void:
     for child in node.get_children():
         _seek_components(child)
 
-func _has_suitable_animation(names: Array[StringName]) -> bool:
+func _has_suitable_animation(names: PackedStringArray) -> bool:
     for label in names:
         var key: String = String(label).to_lower()
         if "walk" in key or "run" in key or "idle" in key:
@@ -222,7 +222,7 @@ func _matching_animation(kind: String) -> StringName:
     for label in _animation_player.get_animation_list():
         var key: String = String(label).to_lower()
         if kind in key and not "start" in key and not "stop" in key:
-            return label
+            return StringName(label)
     return &""
 
 func _update_animation(kind: String, delta: float) -> void:
