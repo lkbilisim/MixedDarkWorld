@@ -1,0 +1,50 @@
+name: MDW 0.3.1 Character Smoke
+
+on:
+  push:
+    branches:
+      - feature/mdw-0-3-1-character
+  workflow_dispatch:
+
+jobs:
+  godot-472-headless:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Download official Godot 4.7.2
+        shell: bash
+        run: |
+          curl -fL --retry 3 -o godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          chmod +x Godot_v4.7.2-stable_linux.x86_64
+
+      - name: Prepare isolated test project
+        shell: bash
+        run: |
+          mkdir -p temp_game/scenes temp_game/scripts/character temp_game/tests temp_game/Depo/KarakterModel
+          cp scenes/MDW_Character_Test.tscn temp_game/scenes/
+          cp scripts/character/mdw_player.gd scripts/character/mdw_character_test.gd temp_game/scripts/character/
+          cp tests/mdw_character_ci.gd temp_game/tests/
+          cp Diesel.glb EMA.glb 'fatt tony.glb' temp_game/Depo/KarakterModel/
+          cat > temp_game/project.godot <<'EOF'
+          config_version=5
+
+          [application]
+          config/name="Mixed Dark World Character Smoke Test"
+
+          [rendering]
+          renderer/rendering_method="gl_compatibility"
+          EOF
+
+      - name: Import models and scripts
+        shell: bash
+        run: |
+          ./Godot_v4.7.2-stable_linux.x86_64 --headless --editor --path temp_game --import
+
+      - name: Load test scene and all three models
+        shell: bash
+        run: |
+          ./Godot_v4.7.2-stable_linux.x86_64 --headless --path temp_game --script res://tests/mdw_character_ci.gd
