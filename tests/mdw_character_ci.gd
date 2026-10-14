@@ -29,6 +29,15 @@ func _check() -> void:
             quit(3)
             return
         print("KARAKTER_TEST: model bulundu: ", path)
+        var skeleton: Variant = player.get("_skeleton")
+        var animator: Variant = player.get("_animation_player")
+        var bones: int = 0
+        var animation_names: PackedStringArray = PackedStringArray()
+        if skeleton is Skeleton3D:
+            bones = (skeleton as Skeleton3D).get_bone_count()
+        if animator is AnimationPlayer:
+            animation_names = (animator as AnimationPlayer).get_animation_list()
+        print("KARAKTER_TEST: eklem = ", bones, ", animasyon = ", animation_names, ", uyari = ", str(player.get("model_warning")))
 
     print("KARAKTER_TEST: sahne ve 3 GLB model yuklemesi basarili.")
     quit(0)
