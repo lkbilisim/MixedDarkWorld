@@ -1,6 +1,6 @@
 # Mixed Dark World 0.3.1 — İnsan Karakter Denemesi
 
-**Durum:** Deneysel geliştirme dalı. Windows/Godot 4.7.2 gerçek uçtan uca test henüz yapılmadı. Mevcut 0.2.3 dünya ve kayıt kodlarına dokunulmaz.
+**Durum:** Deneysel geliştirme dalı. Godot 4.7.2 resmi Linux surumu ile otomatik sahne ve 3 GLB model yukleme testi basarili (GitHub Actions #38629333679). Windows/goruntu/oynatis testi henuz yapilmadi. Mevcut 0.2.3 dünya ve kayıt kodlarına dokunulmaz.
 
 ## Amaç
 - Hazır Diesel.glb, EMA.glb ve fatt tony.glb modellerini kullanan yalıtılmış karakter denemesi.
